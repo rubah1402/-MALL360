@@ -1,0 +1,22 @@
+<!doctype html><html lang="ar" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>LUXORA — MALL360</title><link rel="stylesheet" href="assets/style.css"><script defer src="assets/app.js"></script></head>
+    <body><div class="scene" style="--hero:url('assets/store.jpg')"><header class="topbar">
+      <div class="logo">MALL<b>360</b></div>
+      <div class="pill">الرصيد <strong data-balance></strong></div>
+      <a class="iconbtn" href="cart.html" title="السلة">🛒<sup data-cartcount style="font-size:9px"></sup></a>
+      <a class="iconbtn" href="friends.html" title="الأصدقاء">👥</a>
+      <button class="iconbtn" onclick="M360.voice()" title="الصوت">🎤</button>
+      <a class="iconbtn" href="ai.html" title="MALL AI">✦</a>
+    </header><main class="content">
+<section class="glass heroCard">
+<div class="kicker">YOU ARE INSIDE THE STORE</div><h1>LUXORA</h1><p>أنت داخل متجر ملابس افتراضي. اختر قطعة من الرف واضغط عليها لتجربتها أو شرائها بالرصيد التجريبي.</p>
+<div class="row"><button class="btn alt" onclick="M360.toast('تم تفعيل منظور التجول التجريبي')">🚶 تجول</button><button class="btn alt" onclick="M360.toast('فتح غرفة القياس الافتراضية')">🪞 غرفة القياس</button></div>
+</section>
+<h2 style="margin-top:18px">القطع أمامك</h2>
+<section class="grid grid2">
+<div class="card product"><div class="thumb">🧥</div><div><b>جاكيت أسود</b><small>أسود / رمادي / بيج</small><div class="row space"><span class="money">420 M360</span><button class="btn" onclick="M360.add({name:'جاكيت أسود',price:420})">أضف للسلة</button></div></div></div>
+<div class="card product"><div class="thumb">👕</div><div><b>قميص فاخر</b><small>S / M / L / XL</small><div class="row space"><span class="money">260 M360</span><button class="btn" onclick="M360.add({name:'قميص فاخر',price:260})">أضف للسلة</button></div></div></div>
+<div class="card product"><div class="thumb">👟</div><div><b>حذاء Urban</b><small>مقاسات 39–45</small><div class="row space"><span class="money">380 M360</span><button class="btn" onclick="M360.add({name:'حذاء Urban',price:380})">أضف للسلة</button></div></div></div>
+<div class="card product"><div class="thumb">👜</div><div><b>حقيبة LUX</b><small>إصدار تجريبي</small><div class="row space"><span class="money">510 M360</span><button class="btn" onclick="M360.add({name:'حقيبة LUX',price:510})">أضف للسلة</button></div></div></div>
+</section>
+<div class="card glass" style="margin-top:14px"><b>تجربة على السكن</b><p>اختر أي قطعة ثم استخدم غرفة القياس. في النسخة الإنتاجية يستبدل هذا العرض بمحرك Avatar/3D.</p><button class="btn gold" onclick="M360.toast('تم تطبيق الجاكيت تجريبيًا على السكن')">جرّب الجاكيت على سكني</button></div>
+</main><nav class="bottom"><a href="mall.html" class=""><span>🏠</span>الرئيسية</a><a href="stores.html" class="active"><span>🛍️</span>المتاجر</a><a href="restaurants.html" class=""><span>🍽️</span>المطاعم</a><a href="friends.html" class=""><span>👥</span>الأصدقاء</a><a href="baloot.html" class=""><span>🂡</span>Play</a><a href="events.html" class=""><span>✨</span>الفعاليات</a><a href="myspace.html" class=""><span>◉</span>حسابي</a></nav><div class="toast"></div></div></body></html>

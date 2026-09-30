@@ -1,0 +1,11 @@
+<!doctype html><html lang="ar" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>السلة — MALL360</title><link rel="stylesheet" href="assets/style.css"><script defer src="assets/app.js"></script></head>
+    <body><div class="scene" style="--hero:url('assets/mall.jpg')"><header class="topbar">
+      <div class="logo">MALL<b>360</b></div>
+      <div class="pill">الرصيد <strong data-balance></strong></div>
+      <a class="iconbtn" href="cart.html" title="السلة">🛒<sup data-cartcount style="font-size:9px"></sup></a>
+      <a class="iconbtn" href="friends.html" title="الأصدقاء">👥</a>
+      <button class="iconbtn" onclick="M360.voice()" title="الصوت">🎤</button>
+      <a class="iconbtn" href="ai.html" title="MALL AI">✦</a>
+    </header><main class="content">
+<section class="glass heroCard"><div class="kicker">UNIFIED CART</div><h1>السلة</h1><p>كل مشتريات المتاجر والمطاعم في سلة واحدة تجريبية.</p><div id="items"></div><div class="row space" style="margin-top:12px"><b>الإجمالي</b><span class="money" id="total"></span></div><button class="btn gold" style="width:100%;margin-top:12px" onclick="M360.checkout()">تأكيد الشراء التجريبي</button><small style="display:block;margin-top:8px;color:var(--muted)">DEMO ONLY — لا يتم خصم أي مبلغ حقيقي.</small></section>
+<script>document.addEventListener('DOMContentLoaded',()=>{let c=M360.cart(),box=document.getElementById('items');if(!c.length)box.innerHTML='<p>السلة فارغة.</p>';else box.innerHTML=c.map((x,i)=>`<div class="card row space" style="margin-top:8px"><span>${x.name}</span><span class="money">${x.price} M360</span></div>`).join('');document.getElementById('total').textContent=c.reduce((a,b)=>a+Number(b.price||0),0).toLocaleString()+' M360';})</script></main><nav class="bottom"><a href="mall.html" class="active"><span>🏠</span>الرئيسية</a><a href="stores.html" class=""><span>🛍️</span>المتاجر</a><a href="restaurants.html" class=""><span>🍽️</span>المطاعم</a><a href="friends.html" class=""><span>👥</span>الأصدقاء</a><a href="baloot.html" class=""><span>🂡</span>Play</a><a href="events.html" class=""><span>✨</span>الفعاليات</a><a href="myspace.html" class=""><span>◉</span>حسابي</a></nav><div class="toast"></div></div></body></html>

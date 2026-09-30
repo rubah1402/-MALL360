@@ -1,12 +1,17 @@
-<!doctype html><html lang="ar" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Social World</title><style>
-*{box-sizing:border-box}html,body{margin:0;min-height:100%;font-family:Arial,Tahoma,sans-serif;background:#07111f;color:white}
-body{direction:rtl}
-.wrap{min-height:100vh;padding:18px;background:linear-gradient(180deg,#07111f,#0b1830)}
-.hero{max-width:900px;margin:auto;padding:20px;border-radius:24px;background:rgba(13,31,55,.92);border:1px solid rgba(125,225,255,.25)}
-h1{margin:0 0 10px;font-size:32px}.sub{color:#cfe8f1;line-height:1.8}
-.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:18px}
-a.card{display:flex;min-height:110px;align-items:center;justify-content:center;text-align:center;text-decoration:none;color:#fff;font-weight:700;border-radius:20px;border:1px solid rgba(125,225,255,.35);background:linear-gradient(180deg,#12345a,#0a1d36);padding:16px}
-a.card:active{transform:scale(.98)}
-.back{display:inline-block;margin-top:18px;color:#9cecff;text-decoration:none}
-@media(max-width:600px){.grid{grid-template-columns:1fr 1fr}h1{font-size:28px}a.card{min-height:95px}}
-</style></head><body><div class="wrap"><main class="hero"><h1>Social World</h1><div class="sub">تجول مع الأصدقاء داخل جلسة خاصة.</div><div class="grid"><a class="card" href="majlis.html">Majlis 360</a><a class="card" href="play.html">Play World</a><a class="card" href="atrium.html">الساحة الرئيسية</a></div><a class="back" href="index.html">← الرئيسية</a></main></div></body></html>
+<!doctype html><html lang="ar" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>الأصدقاء — MALL360</title><link rel="stylesheet" href="assets/style.css"><script defer src="assets/app.js"></script></head>
+    <body><div class="scene" style="--hero:url('assets/mall.jpg')"><header class="topbar">
+      <div class="logo">MALL<b>360</b></div>
+      <div class="pill">الرصيد <strong data-balance></strong></div>
+      <a class="iconbtn" href="cart.html" title="السلة">🛒<sup data-cartcount style="font-size:9px"></sup></a>
+      <a class="iconbtn" href="friends.html" title="الأصدقاء">👥</a>
+      <button class="iconbtn" onclick="M360.voice()" title="الصوت">🎤</button>
+      <a class="iconbtn" href="ai.html" title="MALL AI">✦</a>
+    </header><main class="content">
+<section class="glass heroCard"><div class="kicker">PRESENCE 360</div><h1>أصدقاؤك داخل المول</h1><p>في النسخة الكاملة سيكون التواجد حيًا عبر Backend/Realtime. هنا نحاكي التجربة للمستثمر.</p></section>
+<section class="grid" style="margin-top:14px">
+<div class="card row space"><div class="row"><div class="avatarDot">A</div><div><b>أحمد <span class="status"></span></b><small>داخل TECH360</small></div></div><button class="btn" onclick="M360.toast('تم الانضمام إلى أحمد داخل TECH360')">انضم إليه</button></div>
+<div class="card row space"><div class="row"><div class="avatarDot">S</div><div><b>سعود <span class="status"></span></b><small>Majlis 360</small></div></div><a class="btn" href="majlis.html">انضم إليه</a></div>
+<div class="card row space"><div class="row"><div class="avatarDot">F</div><div><b>فهد <span class="status"></span></b><small>Baloot Arena</small></div></div><a class="btn" href="baloot.html">انضم إليه</a></div>
+</section>
+<div class="card glass" style="margin-top:14px"><b>المحادثة الكتابية</b><div id="chat" class="chatlog"><div class="msg">وينكم؟</div><div class="msg me">أنا عند LUXORA، تعالوا.</div></div><div class="row" style="margin-top:8px"><input id="m" class="search" placeholder="اكتب رسالة…" style="flex:1"><button class="btn" onclick="let i=document.getElementById('m');if(i.value){document.getElementById('chat').insertAdjacentHTML('beforeend','<div class=&quot;msg me&quot;>'+i.value.replace(/[<>]/g,'')+'</div>');i.value=''}">إرسال</button></div></div>
+</main><nav class="bottom"><a href="mall.html" class=""><span>🏠</span>الرئيسية</a><a href="stores.html" class=""><span>🛍️</span>المتاجر</a><a href="restaurants.html" class=""><span>🍽️</span>المطاعم</a><a href="friends.html" class="active"><span>👥</span>الأصدقاء</a><a href="baloot.html" class=""><span>🂡</span>Play</a><a href="events.html" class=""><span>✨</span>الفعاليات</a><a href="myspace.html" class=""><span>◉</span>حسابي</a></nav><div class="toast"></div></div></body></html>
