@@ -1,25 +1,253 @@
-<!doctype html><html lang="ar" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>الساحة — MALL360</title><link rel="stylesheet" href="style.css"><script defer src="app.js"></script></head>
-    <body><div class="scene" style="--hero:url('mall.jpg')"><header class="topbar">
-      <div class="logo">MALL<b>360</b></div>
-      <div class="pill">الرصيد <strong data-balance></strong></div>
-      <a class="iconbtn" href="cart.html" title="السلة">🛒<sup data-cartcount style="font-size:9px"></sup></a>
-      <a class="iconbtn" href="friends.html" title="الأصدقاء">👥</a>
-      <button class="iconbtn" onclick="M360.voice()" title="الصوت">🎤</button>
-      <a class="iconbtn" href="ai.html" title="MALL AI">✦</a>
-    </header><main class="content">
-<section class="glass heroCard">
-  <div class="kicker">LIVE VIRTUAL MALL</div>
-  <h1>أنت الآن داخل MALL360</h1>
-  <p>السكن: <b data-skin></b> • تحرّك بين المتاجر والمطاعم والعوالم الاجتماعية. كل شيء في هذه النسخة تجريبي.</p>
-  <div class="row"><a class="btn" href="stores.html">ابدأ التسوق</a><a class="btn alt" href="friends.html">👥 3 أصدقاء داخل المول</a><a class="btn alt" href="ai.html">✦ اسأل MALL AI</a></div>
-</section>
-<h2 style="margin-top:18px">أمامك الآن</h2>
-<section class="grid grid3">
-<a class="card place" href="store-luxora.html"><span class="tag">FASHION</span><h2>LUXORA</h2><small>ادخل محل الملابس</small></a>
-<a class="card place" href="store-tech.html"><span class="tag">TECH</span><h2>TECH360</h2><small>أجهزة وتقنية</small></a>
-<a class="card place" href="restaurants.html"><span class="tag">DINING</span><h2>المطاعم</h2><small>3 تجارب افتراضية</small></a>
-<a class="card place" href="majlis.html"><span class="tag">SOCIAL</span><h2>Majlis 360</h2><small>جلسة خاصة للأصدقاء</small></a>
-<a class="card place" href="baloot.html"><span class="tag">PLAY</span><h2>Baloot Arena</h2><small>أنشئ طاولة ودع أصدقاءك</small></a>
-<a class="card place" href="events.html"><span class="tag">LIVE</span><h2>Event Dome</h2><small>فعاليات وعوالم موسمية</small></a>
-</section>
-</main><nav class="bottom"><a href="mall.html" class="active"><span>🏠</span>الرئيسية</a><a href="stores.html" class=""><span>🛍️</span>المتاجر</a><a href="restaurants.html" class=""><span>🍽️</span>المطاعم</a><a href="friends.html" class=""><span>👥</span>الأصدقاء</a><a href="baloot.html" class=""><span>🂡</span>Play</a><a href="events.html" class=""><span>✨</span>الفعاليات</a><a href="myspace.html" class=""><span>◉</span>حسابي</a></nav><div class="toast"></div></div></body></html>
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<title>MALL360 — 3D Walk</title>
+<style>
+html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#05070b;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Tahoma,Arial;color:#fff}
+canvas{display:block}
+#hud{position:fixed;inset:0;pointer-events:none;z-index:10}
+.top{position:absolute;top:0;left:0;right:0;padding:calc(10px + env(safe-area-inset-top)) 12px 10px;display:flex;gap:8px;align-items:center;background:linear-gradient(180deg,rgba(3,5,9,.85),rgba(3,5,9,.08))}
+.brand{margin-left:auto;font-weight:900;font-size:20px}.brand b{color:#d8b860}
+.pill,.btn{pointer-events:auto;border:1px solid rgba(255,255,255,.16);background:rgba(5,9,16,.62);backdrop-filter:blur(14px);border-radius:999px;padding:9px 12px;font-size:12px;color:#fff}
+.pill strong{color:#e6c66d}
+#help{position:absolute;top:74px;left:50%;transform:translateX(-50%);padding:8px 12px;border-radius:999px;background:rgba(5,10,18,.62);border:1px solid rgba(255,255,255,.12);font-size:11px;transition:.4s}
+#cross{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:18px;height:18px}
+#cross:before,#cross:after{content:"";position:absolute;background:rgba(255,255,255,.8)}
+#cross:before{width:18px;height:1px;top:8px}#cross:after{height:18px;width:1px;left:8px}
+#place{position:absolute;right:12px;top:76px;max-width:180px;padding:10px 12px;border-radius:16px;background:rgba(5,10,18,.62);border:1px solid rgba(255,255,255,.12);font-size:11px}
+#place b{display:block;color:#f2d887;font-size:13px;margin-bottom:2px}
+#interact{position:absolute;left:50%;bottom:145px;transform:translateX(-50%);display:none;pointer-events:auto}
+#interact button{border:none;border-radius:18px;background:linear-gradient(135deg,#c69b45,#f0d27d);color:#15110b;padding:12px 20px;font-weight:900;font-size:14px;box-shadow:0 10px 30px rgba(0,0,0,.35)}
+#joy{position:absolute;left:18px;bottom:calc(22px + env(safe-area-inset-bottom));width:120px;height:120px;border-radius:50%;background:rgba(5,10,18,.36);border:1px solid rgba(255,255,255,.14);pointer-events:auto;touch-action:none}
+#knob{position:absolute;width:50px;height:50px;border-radius:50%;background:rgba(255,255,255,.8);left:35px;top:35px;box-shadow:0 6px 18px rgba(0,0,0,.35)}
+.actions{position:absolute;right:14px;bottom:calc(22px + env(safe-area-inset-bottom));display:grid;gap:8px}
+.actions button,.actions a{pointer-events:auto;text-decoration:none;border:1px solid rgba(255,255,255,.15);background:rgba(5,10,18,.62);backdrop-filter:blur(14px);border-radius:15px;padding:11px 14px;color:white;font-weight:800;font-size:12px;text-align:center}
+#loading{position:fixed;inset:0;background:#05070b;z-index:99;display:grid;place-items:center}
+.loadbox{text-align:center}.loadbox h1{margin:0;font-size:34px}.loadbox h1 b{color:#d8b860}.bar{width:220px;height:5px;border-radius:99px;background:#151b23;overflow:hidden;margin:16px auto}.bar i{display:block;height:100%;width:40%;background:#d8b860;animation:load 1.2s infinite alternate}@keyframes load{to{width:100%}}
+#toast{position:absolute;left:50%;bottom:96px;transform:translateX(-50%);padding:9px 12px;background:rgba(5,10,18,.8);border:1px solid rgba(255,255,255,.14);border-radius:12px;font-size:11px;opacity:0;transition:.25s}
+@media (min-width:900px){#joy{display:none}}
+</style>
+</head>
+<body>
+<div id="loading"><div class="loadbox"><h1>MALL<b>360</b></h1><div class="bar"><i></i></div><small>جاري دخول العالم الافتراضي ثلاثي الأبعاد</small></div></div>
+<div id="hud">
+  <div class="top">
+    <div class="brand">MALL<b>360</b></div>
+    <div class="pill">الرصيد <strong id="balance">10,000 M360</strong></div>
+    <button class="btn" onclick="voiceToggle()">🎤</button>
+    <a class="btn" href="friends.html">👥</a>
+    <a class="btn" href="cart.html">🛒</a>
+  </div>
+  <div id="help">اسحب الشاشة للنظر حولك • استخدم دائرة الحركة للمشي</div>
+  <div id="place"><b>الساحة الرئيسية</b><span>تجول واقترب من أي مدخل</span></div>
+  <div id="cross"></div>
+  <div id="interact"><button id="enterBtn">ادخل المكان</button></div>
+  <div id="joy"><div id="knob"></div></div>
+  <div class="actions">
+    <button onclick="runToggle()">🏃 <span id="runText">مشي</span></button>
+    <a href="stores.html">🗺️ انتقال سريع</a>
+    <a href="ai.html">✦ MALL AI</a>
+  </div>
+  <div id="toast"></div>
+</div>
+
+<script type="module">
+import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.161/build/three.module.js';
+
+const scene = new THREE.Scene();
+scene.background = new THREE.Color(0x070a0f);
+scene.fog = new THREE.FogExp2(0x070a0f,0.012);
+
+const camera = new THREE.PerspectiveCamera(68,innerWidth/innerHeight,.1,500);
+camera.position.set(0,1.72,18);
+
+const renderer = new THREE.WebGLRenderer({antialias:true,powerPreference:'high-performance'});
+renderer.setPixelRatio(Math.min(devicePixelRatio,2));
+renderer.setSize(innerWidth,innerHeight);
+renderer.shadowMap.enabled=true;
+renderer.shadowMap.type=THREE.PCFSoftShadowMap;
+renderer.outputColorSpace=THREE.SRGBColorSpace;
+renderer.toneMapping=THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure=1.15;
+document.body.insertBefore(renderer.domElement,document.body.firstChild);
+
+// Lighting
+scene.add(new THREE.HemisphereLight(0xbfdcff,0x17110b,1.8));
+const sun=new THREE.DirectionalLight(0xffead0,2.6); sun.position.set(8,18,12); sun.castShadow=true; scene.add(sun);
+for(let z=-32; z<=28; z+=10){
+  const l=new THREE.PointLight(0xffc66e,60,16,2); l.position.set(0,5,z); scene.add(l);
+}
+
+// Floor
+const floorMat=new THREE.MeshStandardMaterial({color:0x25272b,metalness:.42,roughness:.22});
+const floor=new THREE.Mesh(new THREE.PlaneGeometry(34,80),floorMat);
+floor.rotation.x=-Math.PI/2; floor.receiveShadow=true; scene.add(floor);
+
+// gold inlay
+for(let x of [-8,8]){
+  const line=new THREE.Mesh(new THREE.BoxGeometry(.06,.015,78),new THREE.MeshStandardMaterial({color:0xc89e4b,emissive:0x5b3e12,emissiveIntensity:.7,metalness:.8,roughness:.2}));
+  line.position.set(x,.012,-5); scene.add(line);
+}
+
+// Ceiling ribs
+for(let z=-35;z<35;z+=8){
+  const beam=new THREE.Mesh(new THREE.BoxGeometry(32,.22,.28),new THREE.MeshStandardMaterial({color:0x16191f,metalness:.7,roughness:.25}));
+  beam.position.set(0,7,z);scene.add(beam);
+}
+
+// central fountain/globe
+const fountain=new THREE.Group();
+const base=new THREE.Mesh(new THREE.CylinderGeometry(5.3,5.6,.55,64),new THREE.MeshStandardMaterial({color:0x1d222a,metalness:.7,roughness:.18}));
+base.position.y=.28; fountain.add(base);
+const water=new THREE.Mesh(new THREE.CylinderGeometry(4.8,4.8,.16,64),new THREE.MeshPhysicalMaterial({color:0x11789a,transparent:true,opacity:.75,roughness:.05,metalness:.05}));
+water.position.y=.58; fountain.add(water);
+const globe=new THREE.Mesh(new THREE.SphereGeometry(1.85,48,48),new THREE.MeshPhysicalMaterial({color:0x1e87c4,emissive:0x0e4f8c,emissiveIntensity:1.2,metalness:.25,roughness:.18,clearcoat:1}));
+globe.position.y=2.6; fountain.add(globe);
+const ring=new THREE.Mesh(new THREE.TorusGeometry(2.4,.06,16,96),new THREE.MeshStandardMaterial({color:0x59dfff,emissive:0x1aa9d2,emissiveIntensity:2}));
+ring.rotation.x=Math.PI/2; ring.position.y=2.6; fountain.add(ring);
+fountain.position.z=3; scene.add(fountain);
+
+// text canvas helper
+function textTexture(text,sub,bg='#111318',accent='#d8b860'){
+ const c=document.createElement('canvas'); c.width=1024;c.height=360; const x=c.getContext('2d');
+ x.fillStyle=bg;x.fillRect(0,0,c.width,c.height);
+ x.fillStyle=accent;x.font='bold 76px Arial';x.textAlign='center';x.fillText(text,512,145);
+ x.fillStyle='#ffffff';x.font='34px Arial';x.fillText(sub||'',512,218);
+ const t=new THREE.CanvasTexture(c);t.colorSpace=THREE.SRGBColorSpace;return t;
+}
+
+const portals=[];
+function makeStore({name,sub,x,z,side,url,color=0xd8b860}){
+ const g=new THREE.Group();
+ const wall=new THREE.Mesh(new THREE.BoxGeometry(8,6,.5),new THREE.MeshStandardMaterial({color:0x15181d,metalness:.35,roughness:.25}));
+ wall.castShadow=true;g.add(wall);
+ const glass=new THREE.Mesh(new THREE.BoxGeometry(6.8,4.5,.12),new THREE.MeshPhysicalMaterial({color:0x91b6cb,transparent:true,opacity:.26,roughness:.08,metalness:.08,clearcoat:1}));
+ glass.position.z=side>0?-.31:.31;g.add(glass);
+ const sign=new THREE.Mesh(new THREE.PlaneGeometry(5.9,2.05),new THREE.MeshBasicMaterial({map:textTexture(name,sub,'#0a0d12','#f1d27b')}));
+ sign.position.set(0,2.45,side>0?-.31:.31); if(side>0) sign.rotation.y=Math.PI; g.add(sign);
+ // shelves/products
+ for(let i=-2;i<=2;i++){
+   const shelf=new THREE.Mesh(new THREE.BoxGeometry(.9,.9,.9),new THREE.MeshStandardMaterial({color: new THREE.Color().setHSL((i+3)/7,.5,.42),metalness:.25,roughness:.35}));
+   shelf.position.set(i*1.2,-1.4,side>0?-.65:.65);g.add(shelf);
+ }
+ g.position.set(x,3,z); g.rotation.y=side>0?Math.PI/2:-Math.PI/2; scene.add(g);
+ const p=new THREE.Object3D();p.position.set(x+(side>0?-3.8:3.8),1.2,z);p.userData={name,url};scene.add(p);portals.push(p);
+}
+
+const left=-14.5,right=14.5;
+makeStore({name:'LUXORA',sub:'FASHION',x:left,z:14,side:-1,url:'store-luxora.html'});
+makeStore({name:'TECH360',sub:'ELECTRONICS',x:right,z:14,side:1,url:'store-tech.html',color:0x59dfff});
+makeStore({name:'BEAUTY HUB',sub:'PERFUME & BEAUTY',x:left,z:2,side:-1,url:'store-generic.html?name=BEAUTY%20HUB'});
+makeStore({name:'HOME360',sub:'HOME & DESIGN',x:right,z:2,side:1,url:'store-generic.html?name=HOME360'});
+makeStore({name:'SPORT LAB',sub:'SPORT',x:left,z:-10,side:-1,url:'store-generic.html?name=SPORT%20LAB'});
+makeStore({name:'GRILL360',sub:'RESTAURANT',x:right,z:-10,side:1,url:'restaurant.html?name=GRILL360'});
+makeStore({name:'COFFEE HOUSE',sub:'CAFE',x:left,z:-22,side:-1,url:'restaurant.html?name=COFFEE%20HOUSE'});
+makeStore({name:'NOMAD',sub:'FINE DINING',x:right,z:-22,side:1,url:'restaurant.html?name=NOMAD'});
+makeStore({name:'MAJLIS 360',sub:'SOCIAL LOUNGE',x:left,z:-34,side:-1,url:'majlis.html'});
+makeStore({name:'BALOOT ARENA',sub:'PLAY',x:right,z:-34,side:1,url:'baloot.html'});
+
+// Decorative palms
+function palm(x,z){
+ const trunk=new THREE.Mesh(new THREE.CylinderGeometry(.16,.24,3.2,12),new THREE.MeshStandardMaterial({color:0x7a5434}));
+ trunk.position.set(x,1.6,z);scene.add(trunk);
+ for(let i=0;i<7;i++){
+  const leaf=new THREE.Mesh(new THREE.ConeGeometry(.28,2.3,7),new THREE.MeshStandardMaterial({color:0x1a6a49}));
+  leaf.position.set(x,3.45,z);leaf.rotation.z=Math.PI/2;leaf.rotation.y=(i/7)*Math.PI*2;scene.add(leaf);
+ }
+}
+for(let z of [20,8,-4,-16,-28]){palm(-6,z);palm(6,z)}
+
+// NPCs
+function npc(x,z,color){
+ const g=new THREE.Group();
+ const body=new THREE.Mesh(new THREE.CapsuleGeometry(.32,.9,6,12),new THREE.MeshStandardMaterial({color}));
+ body.position.y=1;g.add(body);
+ const head=new THREE.Mesh(new THREE.SphereGeometry(.24,18,18),new THREE.MeshStandardMaterial({color:0xc59674}));
+ head.position.y=1.95;g.add(head);
+ g.position.set(x,0,z);scene.add(g);
+}
+npc(-3,11,0xf2f2f2);npc(4,7,0x151515);npc(-4,-8,0x0d6039);npc(3,-20,0xeaeaea);npc(-2,-28,0x202020);
+
+// movement
+let yaw=0,pitch=0;
+let vel=new THREE.Vector3(), moveX=0, moveY=0, running=false;
+const clock=new THREE.Clock();
+const joy=document.getElementById('joy'),knob=document.getElementById('knob');
+let joyId=null,joyRect;
+function setJoy(e){
+ const cx=joyRect.left+joyRect.width/2, cy=joyRect.top+joyRect.height/2;
+ let dx=e.clientX-cx,dy=e.clientY-cy; const max=38; const len=Math.hypot(dx,dy)||1;
+ if(len>max){dx=dx/len*max;dy=dy/len*max}
+ knob.style.transform=`translate(${dx}px,${dy}px)`;
+ moveX=dx/max;moveY=-dy/max;
+}
+joy.addEventListener('pointerdown',e=>{joyId=e.pointerId;joyRect=joy.getBoundingClientRect();joy.setPointerCapture(e.pointerId);setJoy(e)});
+joy.addEventListener('pointermove',e=>{if(e.pointerId===joyId)setJoy(e)});
+function endJoy(e){if(e.pointerId===joyId){joyId=null;moveX=moveY=0;knob.style.transform='translate(0,0)'}}
+joy.addEventListener('pointerup',endJoy);joy.addEventListener('pointercancel',endJoy);
+
+// look by dragging anywhere except UI
+let lookId=null,lastX=0,lastY=0;
+renderer.domElement.addEventListener('pointerdown',e=>{lookId=e.pointerId;lastX=e.clientX;lastY=e.clientY;renderer.domElement.setPointerCapture(e.pointerId)});
+renderer.domElement.addEventListener('pointermove',e=>{
+ if(e.pointerId!==lookId)return;
+ const dx=e.clientX-lastX,dy=e.clientY-lastY;lastX=e.clientX;lastY=e.clientY;
+ yaw-=dx*.004; pitch-=dy*.003; pitch=Math.max(-.65,Math.min(.65,pitch));
+});
+renderer.domElement.addEventListener('pointerup',e=>{if(e.pointerId===lookId)lookId=null});
+
+const keys={};
+addEventListener('keydown',e=>keys[e.code]=true);addEventListener('keyup',e=>keys[e.code]=false);
+
+const enterWrap=document.getElementById('interact'), enterBtn=document.getElementById('enterBtn');
+let nearby=null;
+enterBtn.onclick=()=>{if(nearby) location.href=nearby.userData.url};
+
+function animate(){
+ requestAnimationFrame(animate);
+ const dt=Math.min(clock.getDelta(),.033);
+ const speed=(running?7.5:4.2)*dt;
+ let mx=moveX,my=moveY;
+ if(keys.KeyW||keys.ArrowUp)my=1;if(keys.KeyS||keys.ArrowDown)my=-1;if(keys.KeyA||keys.ArrowLeft)mx=-1;if(keys.KeyD||keys.ArrowRight)mx=1;
+ const forward=new THREE.Vector3(-Math.sin(yaw),0,-Math.cos(yaw));
+ const right=new THREE.Vector3(Math.cos(yaw),0,-Math.sin(yaw));
+ camera.position.addScaledVector(forward,my*speed);
+ camera.position.addScaledVector(right,mx*speed);
+ camera.position.x=Math.max(-11.2,Math.min(11.2,camera.position.x));
+ camera.position.z=Math.max(-39,Math.min(27,camera.position.z));
+ camera.rotation.order='YXZ';camera.rotation.y=yaw;camera.rotation.x=pitch;
+
+ nearby=null;let nd=99;
+ for(const p of portals){
+  const d=camera.position.distanceTo(p.position);
+  if(d<nd){nd=d;nearby=p}
+ }
+ if(nd<4.6){
+  enterWrap.style.display='block';enterBtn.textContent='ادخل '+nearby.userData.name;
+  document.querySelector('#place b').textContent=nearby.userData.name;
+  document.querySelector('#place span').textContent='أنت قريب من المدخل';
+ }else{
+  enterWrap.style.display='none';
+  document.querySelector('#place b').textContent='الساحة الرئيسية';
+  document.querySelector('#place span').textContent='تجول واقترب من أي مدخل';
+ }
+ globe.rotation.y+=dt*.25; ring.rotation.z+=dt*.15;
+ renderer.render(scene,camera);
+}
+animate();
+
+addEventListener('resize',()=>{camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();renderer.setSize(innerWidth,innerHeight)});
+setTimeout(()=>{document.getElementById('loading').style.display='none';setTimeout(()=>document.getElementById('help').style.opacity='0',3500)},1200);
+
+// expose
+window.runToggle=()=>{running=!running;document.getElementById('runText').textContent=running?'ركض':'مشي'};
+window.voiceToggle=()=>toast('الصوت في الديمو واجهة فقط — يحتاج Backend/Realtime');
+window.toast=(t)=>{const x=document.getElementById('toast');x.textContent=t;x.style.opacity='1';setTimeout(()=>x.style.opacity='0',1800)};
+
+const bal=Number(localStorage.getItem('m360_balance')||10000);
+document.getElementById('balance').textContent=bal.toLocaleString('en-US')+' M360';
+</script>
+</body>
+</html>
